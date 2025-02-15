@@ -1,0 +1,188 @@
+@import './variables';
+
+@import './components/panels';
+@import './components/stats-bar';
+
+
+
+
+:root {
+    --board-grid-columns: 5;
+    --board-grid-rows: 8;
+
+    --cell-size: 50px;
+
+    --cell-destroy-duration: 500ms;
+    --cell-move-duration: 300ms;
+    --cell-move-down-duration: 500ms;
+
+    --cell-sprite-size: calc(var(--cell-size) * 0.6);
+
+    --global-delay: 300ms;
+
+    --cell-padding: 4px;
+}
+
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+body {
+    background-color: #99d;
+    background-image: url(../images/background-00.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+
+    font-size: 12px;
+
+    h1 {
+        margin: 0;
+    }
+
+    .application {
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        align-items: center;
+        // position: relative;
+        height: 100vh;
+        // height: calc(var(--cell-size) * var(--board-grid-rows));
+        // width: calc(var(--cell-size) * var(--board-grid-columns));
+        margin: auto;
+
+
+        .board {
+            margin: auto;
+            position: relative;
+
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .audio-player {
+                audio {
+                    width: 220px;
+                    height: 30px;
+                }
+            }
+
+
+
+            .score-counter {
+                color: #FDA7B4;
+                // add border to letters
+                text-shadow: 2px 2px 0 #7F8BBD, -2px -2px 0 #7F8BBD, 2px -2px 0 #7F8BBD, -2px 2px 0 #7F8BBD;
+            }
+
+            .grid {
+                position: relative;
+                height: calc(var(--cell-size) * var(--board-grid-rows));
+                width: calc(var(--cell-size) * var(--board-grid-columns));
+
+                .cell {
+
+                    cursor: pointer;
+                    position: absolute;
+                    display: flex;
+                    height: var(--cell-size);
+                    width: var(--cell-size);
+                    justify-content: center;
+                    align-items: center;
+                    transition: all var(--global-delay) ease-in-out;
+
+                    // border: 1px solid #000;
+                    // background-color: #9aa;
+                    // border-radius: 5px;
+
+                    &.cell--selected {
+                        transform: scale(1.2) rotate(10deg);
+                        z-index: 100;
+                        .cell__wrapper {
+                            background-color: #FFACB0;
+                        }
+                    }
+
+                    .cell__wrapper {
+                        cursor: pointer;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        width: calc(100% - var(--cell-padding) * 2);
+                        height: calc(100% - var(--cell-padding) * 2);
+
+                        border: 1px solid #FFACB0;
+                        background-color: #55C0B799;
+                        border-radius: 5px;
+                        box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+
+                        &:hover {
+                            transform: scale(1.1);
+                            background-color: #DEDBA499;
+                        }
+
+
+                        transition: all var(--global-delay) ease-in-out;
+
+                        .cell__sprite {
+                            transform-origin: 50% 100%;
+                            animation: oscillate 2s infinite;
+                            font-size: 1rem;
+                            // add text shadow
+                            text-shadow: 2px 2px 2px #0009;
+                        }
+
+
+
+                        @for $i from 1 through length($emojies) {
+                            .cell__sprite--#{$i - 1}::before {
+                                content: nth($emojies, $i);
+                                font-size: var(--cell-sprite-size);
+                                margin-top: -20px;
+                            }
+                        }
+
+                    }
+
+                }
+
+                .cell--moving-down {
+                    // transition: all var(--cell-move-down-duration) ease-in-out;
+                }
+
+                .cell--destroyed {
+                    background-color: #ff0;
+                    transition: all var(--cell-destroy-duration) ease-in-out;
+                    transform: scale(4) rotate(360deg);
+                    opacity: 0;
+                    z-index: 100;
+                }
+
+
+            }
+
+
+            @keyframes oscillate {
+                0% {
+                transform: rotate(-15deg);
+                }
+                // 25% {
+                //   transform: rotate(0deg); /* Inclinaison à droite */
+                // }
+                50% {
+                transform: rotate(15deg); /* Retour au centre */
+                }
+                // 75% {
+                //   transform: rotate(0deg); /* Inclinaison à gauche */
+                // }
+                100% {
+                transform: rotate(-15deg); /* Retour au centre */
+                }
+            }
+        }
+    }
+}
