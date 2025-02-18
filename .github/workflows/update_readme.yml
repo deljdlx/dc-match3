@@ -96,5 +96,5 @@ on:
 jobs:
   call-shared-workflow:
     uses: deljdlx/github-tools/.github/workflows/update-main-readme.yml@main
-    with:
-      token: ${{ secrets.ACTION_TOKEN }}
+    secrets:
+        personal_access_token: ${{ secrets.ACTION_TOKEN }}
