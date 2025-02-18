@@ -1,4 +1,4 @@
-# Small match three game
+# 🕹️ Small match three game
 <!--<SHORT-PRESENTATION>-->
 A match 3 game in React. Context usage should be replaced by zustand
 <!--</SHORT-PRESENTATION>-->
