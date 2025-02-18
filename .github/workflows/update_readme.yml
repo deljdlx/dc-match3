@@ -16,6 +16,11 @@ jobs:
       options: --workdir /github/workspace
     steps:
 
+      - name: Install required packages
+        run: |
+          apt-get update && apt-get install -y git curl jq unzip
+          docker-php-ext-install zip
+
       - name: Install Git
         run: apt-get update && apt-get install -y git
 
