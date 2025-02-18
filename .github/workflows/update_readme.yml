@@ -18,7 +18,7 @@ jobs:
 
       - name: Install required packages
         run: |
-          apt-get update && apt-get install -y git curl jq unzip
+          apt-get update && apt-get install -y git curl jq unzip libzip-dev
           docker-php-ext-install zip
 
       - name: Install Git
