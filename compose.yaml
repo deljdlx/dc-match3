@@ -1,5 +1,6 @@
 services:
   match3:
+    container_name: match3
     build: ./compose
     restart: always
     env_file:
